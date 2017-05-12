@@ -64,12 +64,10 @@ public class DBHelper extends SQLiteOpenHelper {
         // Select all the tasks' description
         String selectQuery = "SELECT " + COLUMN_DESCRIPTION
                 + " FROM " + TABLE_TASK;
-
         // Get the instance of database to read
         SQLiteDatabase db = this.getReadableDatabase();
         // Run the SQL query and get back the Cursor object
         Cursor cursor = db.rawQuery(selectQuery, null);
-
         // moveToFirst() moves to first row
         if (cursor.moveToFirst()) {
             // Loop while moveToNext() points to next row
@@ -90,4 +88,28 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return tasks;
     }
+    public ArrayList<Task> getTasks() {
+        ArrayList<Task> tasks = new ArrayList<Task>();
+        String selectQuery = "SELECT " + COLUMN_ID + ", "
+                + COLUMN_DESCRIPTION + ", "
+                + COLUMN_DATE
+                + " FROM " + TABLE_TASK;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String description = cursor.getString(1);
+                String date = cursor.getString(2);
+                Task obj = new Task(id, description, date);
+                tasks.add(obj);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return tasks;
+    }
+
 }
