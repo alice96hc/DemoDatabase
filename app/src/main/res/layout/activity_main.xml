@@ -20,6 +20,11 @@
         android:layout_weight="0.46"
         android:text="Get Tasks" />
 
+    <ListView
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <TextView
         android:id="@+id/tvResults"
         android:layout_width="match_parent"
